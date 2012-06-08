@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   
   s.rubyforge_project = "area"
 
-  s.summary = "Look up a region by area code."
-  s.description = "This gem lets you find a region by an area code."
+  s.summary = "Convert a region to area code and vice versa."
+  s.description = "Area allows you to convert a region in the United States to an area code and vice versa. Area uses public data and does not rely on any external services or have any dependencies."
   s.files = Dir["data/*"] + Dir["lib/*"] + ["MIT-LICENSE", "Rakefile", "readme.md"] 
   
   s.require_paths = ['lib']

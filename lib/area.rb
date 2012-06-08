@@ -7,8 +7,21 @@ end
 class Integer
   def to_region
     Area::DATA.each do |row|
-      r = Regexp.new("#{self}")
-      return row[1] if r.match(row[0])
+      if row.first == self.to_s
+        return row.last
+      end
     end
+  end
+end
+
+class String
+  def to_area
+    @area_codes = []
+    Area::DATA.each do |row|
+      if row[1] == self        
+        @area_codes.push(row.first)
+      end
+    end
+    @area_codes
   end
 end

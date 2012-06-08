@@ -1,12 +1,18 @@
 # Area
 
-Hi. This gem allows you to extract a region in the United States from an area code. Area uses public data and does not rely on any external services or have any dependencies.
+Hi. This gem allows you to convert a region in the United States to an area code and vice versa. Area uses public data and does not rely on any external services or have any dependencies. 
 
 ## Usage
 
 In your gemfile: `gem 'area'`
 
-In your code: `646.to_region #=> NY`
+In your code: 
+
+``` ruby
+646.to_region #=> NY
+"AK".to_area #=> ["907"]
+"CT".to_area #=> ["203", "860"]
+```
 
 ### Testing and Contributing
 

@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/jgv/area"  
   s.rubyforge_project = "area"
   s.summary = "Convert a region to area code and vice versa."
-  s.description = "Area allows you to convert a region in the United States to an area code and vice versa. Area uses public data and does not rely on any external services or have any dependencies."
+  s.description = "Area allows you to perform a variety of conversions between places in the United States and area codes or zip codes."
   s.files = Dir["data/*"] + Dir["lib/*"] + ["MIT-LICENSE", "Rakefile", "readme.md"]  
   s.require_paths = ['lib']
 

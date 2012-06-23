@@ -8,7 +8,28 @@ class TestInteger < MiniTest::Unit::TestCase
   end
   
   def test_that_it_converts_zip_code_to_region
-    assert_equal "Brooklyn", 11211.to_region
+    assert_equal "Brooklyn, NY", 11211.to_region
+  end
+
+  def test_that_it_supports_options
+    assert_equal "Brooklyn", 11211.to_region(:city => true)
+    assert_equal "NY", 11211.to_region(:state => true)
+  end
+
+  def test_that_it_converts_zip_code_to_latlon
+    assert_equal "40.71209, -73.95427", 11211.to_latlon
+  end
+
+  def test_that_it_converts_zip_code_to_lat
+    assert_equal "40.71209", 11211.to_lat
+  end
+
+  def test_that_it_converts_zip_code_to_lon
+    assert_equal "-73.95427", 11211.to_lon
+  end
+
+  def test_that_it_converts_zip_code_to_timezone
+    assert_equal "-5", 11211.to_gmt_offset
   end
 
 end

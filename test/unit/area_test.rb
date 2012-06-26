@@ -28,7 +28,7 @@ class TestInteger < MiniTest::Unit::TestCase
     assert_equal "-73.95427", 11211.to_lon
   end
 
-  def test_that_it_converts_zip_code_to_timezone
+  def test_that_it_converts_zip_code_to_gmt_offset
     assert_equal "-5", 11211.to_gmt_offset
   end
 
@@ -48,6 +48,26 @@ class TestString < MiniTest::Unit::TestCase
 
   def test_that_it_converts_to_offset
     assert_equal "-5", "ny".to_gmt_offset
+  end
+
+end
+
+class TestArray < MiniTest::Unit::TestCase
+
+  def test_that_it_converts_latlon_to_zip_code
+    assert_equal "11211", [40.71209, -73.95427].to_zip
+  end
+
+  def test_that_it_converts_latlon_to_region
+    assert_equal "Brooklyn, NY", [40.71209, -73.95427].to_region
+  end
+
+  def test_that_it_converts_latlon_to_region_with_options
+    assert_equal "NY", [40.71209, -73.95427].to_region(:state => true)
+  end
+
+  def test_that_it_converts_latlon_to_gmt_offset
+    assert_equal "-5", [40.71209, -73.95427].to_gmt_offset
   end
 
 end

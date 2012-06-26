@@ -1,5 +1,4 @@
 [![Build Status](https://secure.travis-ci.org/jgv/area.png)](http://travis-ci.org/jgv/area)
-
 # Area
 
 Hi. This gem allows you to perform the following conversions:
@@ -12,8 +11,11 @@ Hi. This gem allows you to perform the following conversions:
 * A zipcode to just a lon
 * A zipcode to its GMT offset
 * A state to its GMT offset
+* A lat/lon pair to a region
+* A lat/lon pair to its GMT offset
+* A lat/lon pair to its zip code 
 
-Area uses public domain data and does not rely on any external services.
+Area uses public domain data and does not rely on any external services (the internets). Usage is meant to be more lightweight than the Geocoder gem.
 
 ## Installation
 
@@ -62,6 +64,21 @@ In your gemfile: `gem 'area'`
 #### Get the GMT offset of a state
 ```` ruby
 "NY".to_gmt_offset #=> "-5" # by state
+```
+
+#### Convert a lat/lon pair to a zipcode
+```` ruby
+[40.71209, -73.95427].to_zip #=> "11211"
+```
+
+#### Convert a lat/lon pair to a region
+```` ruby
+[40.71209, -73.95427].to_region #=> "Brooklyn, NY"
+```
+
+#### Get the GMT offset for a lat/lon pair
+```` ruby
+[40.71209, -73.95427].to_gmt_offset #=> "-5"
 ```
 
 ## Testing and Contributing and Stuff

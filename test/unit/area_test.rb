@@ -46,6 +46,10 @@ class TestString < MiniTest::Unit::TestCase
     assert_equal ["11101", "11109", "11120"], "long Island city".to_zip
   end
 
+  def test_that_it_converts_city_state_to_zip_code
+    assert_equal ["11101", "11109", "11120"], "long Island city, ny".to_zip
+  end
+
   def test_that_it_converts_to_offset
     assert_equal "-5", "ny".to_gmt_offset
   end

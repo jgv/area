@@ -22,7 +22,7 @@ Area uses public domain data and does not rely on any external services (the int
 
 In your gemfile: `gem 'area'`
 
-## Usaage
+## Usage
 
 #### Convert an area code to a state/region
 ``` ruby

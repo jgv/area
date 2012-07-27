@@ -15,12 +15,12 @@ class Array
   end
 
   def to_zip
-    lat = self[0].round(3)
-    lon = self[1].round(3)
+    lat = '%.3f' % self[0]
+    lon = '%.3f' % self[1]
 
     Area::ZIP_CODES.each do |row|
-      db_lat = row[3].to_f.round(3)
-      db_lon = row[4].to_f.round(3)
+      db_lat = '%.3f' % row[3].to_f
+      db_lon = '%.3f' % row[4].to_f
 
       if db_lat.to_s == lat.to_s and db_lon.to_s == lon.to_s
         return row[0]

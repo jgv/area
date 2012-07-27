@@ -74,4 +74,8 @@ class TestArray < MiniTest::Unit::TestCase
     assert_equal "-5", [40.71209, -73.95427].to_gmt_offset
   end
 
+  def test_that_it_handles_latlon_precision
+    assert_equal "11211", [40.7120912345, -73.9542712345].to_zip
+  end
+
 end

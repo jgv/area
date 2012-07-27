@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Area by jgv</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Area</h1>
+        <p>Perform a variety of conversions between places in the United States and area codes or zip codes.</p>
+
+        <p class="view"><a href="https://github.com/jgv/area">View the Project on GitHub <small>jgv/area</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/jgv/area/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/jgv/area/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/jgv/area">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p><a href="http://travis-ci.org/jgv/area"><img src="https://secure.travis-ci.org/jgv/area.png" alt="Build Status"></a></p>
+
+<h1>Area</h1>
+
+<p>Hi. This gem allows you to perform the following conversions:</p>
+
+<ul>
+<li>An area code to a region (state)</li>
+<li>A state to an area code</li>
+<li>A place to a zip code</li>
+<li>A zip code to a place (control granularity with city and state options)</li>
+<li>A zipcode to a lat/lon</li>
+<li>A zipcode to just a lat</li>
+<li>A zipcode to just a lon</li>
+<li>A zipcode to its GMT offset</li>
+<li>A state to its GMT offset</li>
+<li>A lat/lon pair to a region</li>
+<li>A lat/lon pair to its GMT offset</li>
+<li>A lat/lon pair to its zip code </li>
+</ul><p>Area uses public domain data and does not rely on any external services (the internets). Usage is meant to be more lightweight than the Geocoder gem.</p>
+
+<h2>Installation</h2>
+
+<p>In your gemfile: <code>gem 'area'</code></p>
+
+<h2>Usage</h2>
+
+<h4>Convert an area code to a state/region</h4>
+
+<div class="highlight"><pre><span class="mi">646</span><span class="o">.</span><span class="n">to_region</span> <span class="c1">#=&gt; NY</span>
+</pre></div>
+
+<h4>Convert a state to an area code</h4>
+
+<div class="highlight"><pre><span class="s2">"AK"</span><span class="o">.</span><span class="n">to_area</span> <span class="c1">#=&gt; "907"</span>
+<span class="s2">"CT"</span><span class="o">.</span><span class="n">to_area</span> <span class="c1">#=&gt; ["203", "860"]</span>
+</pre></div>
+
+<h4>Convert a place to a zip code</h4>
+
+<div class="highlight"><pre><span class="s2">"long island city, ny"</span><span class="o">.</span><span class="n">to_zip</span> <span class="c1">#=&gt; ["11101", "11109", "11120"]</span>
+<span class="s2">"hastings on hudson"</span><span class="o">.</span><span class="n">to_zip</span> <span class="c1">#=&gt; "10706"</span>
+</pre></div>
+
+<h4>Convert a zip code to a place</h4>
+
+<div class="highlight"><pre><span class="s2">"11211"</span><span class="o">.</span><span class="n">to_region</span> <span class="c1">#=&gt; "Brooklyn, NY"</span>
+<span class="s2">"11211"</span><span class="o">.</span><span class="n">to_region</span><span class="p">(</span><span class="ss">:city</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">)</span> <span class="c1">#=&gt; "Brooklyn"</span>
+<span class="s2">"11211"</span><span class="o">.</span><span class="n">to_region</span><span class="p">(</span><span class="ss">:state</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">)</span> <span class="c1">#=&gt; "NY"</span>
+</pre></div>
+
+<h4>Convert a zip code to a lat/lon</h4>
+
+<div class="highlight"><pre><span class="s2">"11211"</span><span class="o">.</span><span class="n">to_latlon</span> <span class="c1">#=&gt; "40.71209, -73.95427"</span>
+</pre></div>
+
+<h4>Convert a zip code to a lat</h4>
+
+<div class="highlight"><pre><span class="s2">"11211"</span><span class="o">.</span><span class="n">to_lat</span> <span class="c1">#=&gt; "40.71209"</span>
+</pre></div>
+
+<h4>Convert a zip code to a lon</h4>
+
+<div class="highlight"><pre><span class="s2">"11211"</span><span class="o">.</span><span class="n">to_lon</span> <span class="c1">#=&gt; "40.71209, -73.95427"</span>
+</pre></div>
+
+<h4>Get the GMT offset of a zipcode</h4>
+
+<div class="highlight"><pre><span class="s2">"11211"</span><span class="o">.</span><span class="n">to_gmt_offset</span> <span class="c1">#=&gt; "-5"</span>
+</pre></div>
+
+<h4>Get the GMT offset of a state</h4>
+
+<div class="highlight"><pre><span class="s2">"NY"</span><span class="o">.</span><span class="n">to_gmt_offset</span> <span class="c1">#=&gt; "-5" # by state</span>
+</pre></div>
+
+<h4>Convert a lat/lon pair to a zipcode</h4>
+
+<div class="highlight"><pre><span class="o">[</span><span class="mi">40</span><span class="o">.</span><span class="mi">71209</span><span class="p">,</span> <span class="o">-</span><span class="mi">73</span><span class="o">.</span><span class="mi">95427</span><span class="o">].</span><span class="n">to_zip</span> <span class="c1">#=&gt; "11211"</span>
+</pre></div>
+
+<h4>Convert a lat/lon pair to a region</h4>
+
+<div class="highlight"><pre><span class="o">[</span><span class="mi">40</span><span class="o">.</span><span class="mi">71209</span><span class="p">,</span> <span class="o">-</span><span class="mi">73</span><span class="o">.</span><span class="mi">95427</span><span class="o">].</span><span class="n">to_region</span> <span class="c1">#=&gt; "Brooklyn, NY"</span>
+</pre></div>
+
+<h4>Get the GMT offset for a lat/lon pair</h4>
+
+<div class="highlight"><pre><span class="o">[</span><span class="mi">40</span><span class="o">.</span><span class="mi">71209</span><span class="p">,</span> <span class="o">-</span><span class="mi">73</span><span class="o">.</span><span class="mi">95427</span><span class="o">].</span><span class="n">to_gmt_offset</span> <span class="c1">#=&gt; "-5"</span>
+</pre></div>
+
+<h2>Testing and Contributing and Stuff</h2>
+
+<p>Contributions are more than welcome. I'm <a href="http://travis-ci.org/jgv/area">testing</a> with minitest. This gem supports:</p>
+
+<ul>
+<li>Ruby 1.8.7</li>
+<li>Ruby 1.9.2</li>
+<li>Ruby 1.9.3</li>
+<li>JRuby 1.8</li>
+<li>JRuby 1.9</li>
+<li>Rubinius 1.8</li>
+<li>Rubinius 1.9</li>
+</ul><h2>Copyright</h2>
+
+<p>Copyright (c) 2012 Jonathan Vingiano. See <a href="https://github.com/jgv/area/blob/master/MIT-LICENSE">LICENSE</a> for details.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/jgv">jgv</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>

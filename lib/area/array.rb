@@ -15,17 +15,20 @@ class Array
   end
 
   def to_zip
-    lat = '%.3f' % self[0]
-    lon = '%.3f' % self[1]
-
     Area::ZIP_CODES.each do |row|
-      db_lat = '%.3f' % row[3].to_f
-      db_lon = '%.3f' % row[4].to_f
-
-      if db_lat.to_s == lat.to_s and db_lon.to_s == lon.to_s
-        return row[0]
+      if row[3] and row[4]
+        db_lat_len = row[3].split('.').length
+        db_lon_len = row[4].split('.').length
+        lat = "%.#{db_lat_len}f" % self[0]
+        lon = "%.#{db_lon_len}f" % self[1]
+        db_lat = "%.#{db_lat_len}f" % row[3].to_f
+        db_lon = "%.#{db_lon_len}f" % row[4].to_f
+        if db_lat.to_s == lat.to_s and db_lon.to_s == lon.to_s
+          @zip = row[0]
+        end
       end
     end
+    @zip || nil
   end
 
   def to_gmt_offset

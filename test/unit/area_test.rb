@@ -75,7 +75,7 @@ class TestArray < MiniTest::Unit::TestCase
   end
 
   def test_that_it_handles_latlon_precision
-    assert_equal "11211", [40.7120912345, -73.9542712345].to_zip
+    assert_equal "11211", [40.71209123228157, -73.95488409019887].to_zip
   end
 
 end

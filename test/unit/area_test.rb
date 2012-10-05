@@ -2,20 +2,12 @@ require 'minitest/autorun'
 require 'area'
 
 class TestInteger < MiniTest::Unit::TestCase
-  
+
+
   def test_that_it_converts_area_code_to_region
     assert_equal "NY", 646.to_region    
   end
   
-  def test_that_it_converts_zip_code_to_region
-    assert_equal "Brooklyn, NY", 11211.to_region
-  end
-
-  def test_that_it_supports_options
-    assert_equal "Brooklyn", 11211.to_region(:city => true)
-    assert_equal "NY", 11211.to_region(:state => true)
-  end
-
   def test_that_it_converts_zip_code_to_latlon
     assert_equal "40.71209, -73.95427", 11211.to_latlon
   end
@@ -35,6 +27,19 @@ class TestInteger < MiniTest::Unit::TestCase
 end
 
 class TestString < MiniTest::Unit::TestCase
+
+  def test_that_it_converts_area_code_to_region
+    assert_equal "NY", "646".to_region    
+  end
+  
+  def test_that_it_converts_zip_code_to_region
+    assert_equal "Brooklyn, NY", "11211".to_region
+  end
+
+  def test_that_it_supports_options
+    assert_equal "Brooklyn", "11211".to_region(:city => true)
+    assert_equal "NY", "11211".to_region(:state => true)
+  end
 
   def test_that_it_converts_to_area_code
     assert_equal "907", "AK".to_area

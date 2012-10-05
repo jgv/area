@@ -7,18 +7,8 @@ class Integer
           return row.last
         end
       end
-    else # more than 3 digits, assume a zipcode
-      Area::ZIP_CODES.each do |row|
-        if row.first == self.to_s
-          if options[:city]
-            return row[1]
-          elsif options[:state]
-            return row[2]
-          else
-            return row[1] + ', ' + row[2]
-          end
-        end
-      end
+    else
+      # puts "not an area code"
     end
   end
 

@@ -5,9 +5,9 @@ class TestInteger < MiniTest::Unit::TestCase
 
 
   def test_that_it_converts_area_code_to_region
-    assert_equal "NY", 646.to_region    
+    assert_equal "NY", 646.to_region
   end
-  
+
   def test_that_it_converts_zip_code_to_latlon
     assert_equal "40.71209, -73.95427", 11211.to_latlon
   end
@@ -24,14 +24,22 @@ class TestInteger < MiniTest::Unit::TestCase
     assert_equal "-5", 11211.to_gmt_offset
   end
 
+  def test_that_it_handles_bad_area_codes
+    assert_nil(1234.to_region)
+    assert_nil(1234.to_latlon)
+    assert_nil(1234.to_lat)
+    assert_nil(1234.to_lon)
+    assert_nil(1234.to_gmt_offset)
+  end
+
 end
 
 class TestString < MiniTest::Unit::TestCase
 
   def test_that_it_converts_area_code_to_region
-    assert_equal "NY", "646".to_region    
+    assert_equal "NY", "646".to_region
   end
-  
+
   def test_that_it_converts_zip_code_to_region
     assert_equal "Brooklyn, NY", "11211".to_region
   end
@@ -59,6 +67,13 @@ class TestString < MiniTest::Unit::TestCase
     assert_equal "-5", "ny".to_gmt_offset
   end
 
+  def test_that_it_handles_incorrect_zips
+    assert_equal [], "9888".to_zip
+    assert_nil "9888".to_region
+    assert_equal [], "9888".to_area
+    assert_nil "9888".to_gmt_offset
+  end
+
 end
 
 class TestArray < MiniTest::Unit::TestCase
@@ -81,6 +96,12 @@ class TestArray < MiniTest::Unit::TestCase
 
   def test_that_it_handles_latlon_precision
     assert_equal "11211", [40.71209123228157, -73.95488409019887].to_zip
+  end
+
+  def test_that_it_handles_incorrect_values
+    assert_nil [12.12345, -40.23423].to_zip
+    assert_nil [12.12345, -40.23423].to_region
+    assert_nil [12.12345, -40.23423].to_gmt_offset
   end
 
 end

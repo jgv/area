@@ -11,22 +11,22 @@ class String
   def to_region(options = {})
     if self.to_s.length == 3 # an area code
       Area::AREA_CODES.each do |row|
-        @region = row.last if row.first == self.to_s
+        return row.last if row.first == self.to_s
       end
     else # more than 3 digits, assume a zipcode
       Area::ZIP_CODES.each do |row|
         if row.first == self.to_s
           if options[:city]
-            @region = row[1]
+            return row[1]
           elsif options[:state]
-            @region = row[2]
+            return row[2]
           else
-            @region = row[1] + ', ' + row[2]
+            return row[1] + ', ' + row[2]
           end
         end
       end
     end
-    @region || nil
+    nil
   end
 
   def to_zip
@@ -49,10 +49,10 @@ class String
 
   def to_gmt_offset
     Area::ZIP_CODES.each do |row|
-      @offset = row[5] if row[2] != nil and
+      return row[5] if row[2] != nil and
                           (row[2].upcase == self.to_s.upcase or row[0] == self.to_s)
     end
-    @offset || nil
+     nil
   end
 
 end

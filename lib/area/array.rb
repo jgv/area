@@ -4,15 +4,15 @@ class Array
     Area::ZIP_CODES.each do |row|
       if row[3] == self[0].to_s and row[4] == self[1].to_s
         if options[:city]
-          @area =  row[1]
+          return row[1]
         elsif options[:state]
-          @area = row[2]
+          return row[2]
         else
-          @area =row[1] + ', ' + row[2]
+          return row[1] + ', ' + row[2]
         end
       end
     end
-    @area || nil
+    nil
   end
 
   def to_zip
@@ -25,20 +25,20 @@ class Array
         db_lat = "%.#{db_lat_len}f" % row[3].to_f
         db_lon = "%.#{db_lon_len}f" % row[4].to_f
         if db_lat.to_s == lat.to_s and db_lon.to_s == lon.to_s
-          @zip = row[0]
+          return row[0]
         end
       end
     end
-    @zip || nil
+    nil
   end
 
   def to_gmt_offset
     Area::ZIP_CODES.each do |row|
       if row[3] == self[0].to_s and row[4] == self[1].to_s
-        @offset = row[5]
+        return row[5]
       end
     end
-    @offset || nil
+    nil
   end
 
 end

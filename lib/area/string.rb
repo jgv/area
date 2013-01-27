@@ -49,7 +49,8 @@ class String
 
   def to_gmt_offset
     Area::ZIP_CODES.each do |row|
-      @offset = row[5] if row[2] != nil and row[2].upcase == self.to_s.upcase
+      @offset = row[5] if row[2] != nil and
+                          (row[2].upcase == self.to_s.upcase or row[0] == self.to_s)
     end
     @offset || nil
   end

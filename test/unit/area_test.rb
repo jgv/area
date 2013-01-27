@@ -20,8 +20,12 @@ class TestInteger < MiniTest::Unit::TestCase
     assert_equal "-73.95427", 11211.to_lon
   end
 
-  def test_that_it_converts_zip_code_to_gmt_offset
+  def test_that_it_converts_zip_code_int_to_gmt_offset
     assert_equal "-5", 11211.to_gmt_offset
+  end
+
+  def test_that_it_converts_zip_code_string_to_gmt_offset
+    assert_equal "-5", "11211".to_gmt_offset
   end
 
   def test_that_it_handles_bad_area_codes

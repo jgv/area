@@ -3,7 +3,6 @@ require 'area'
 
 class TestInteger < MiniTest::Unit::TestCase
 
-
   def test_that_it_converts_area_code_to_region
     assert_equal "NY", 646.to_region
   end
@@ -29,11 +28,11 @@ class TestInteger < MiniTest::Unit::TestCase
   end
 
   def test_that_it_handles_bad_area_codes
-    assert_nil(1234.to_region)
-    assert_nil(1234.to_latlon)
-    assert_nil(1234.to_lat)
-    assert_nil(1234.to_lon)
-    assert_nil(1234.to_gmt_offset)
+    assert_raises(ArgumentError) { 1234.to_region }
+    assert_raises(ArgumentError) { 1234.to_latlon }
+    assert_raises(ArgumentError) { 1234.to_lat }
+    assert_raises(ArgumentError) { 1234.to_lon }
+    assert_raises(ArgumentError) { 1234.to_gmt_offset }
   end
 
 end
@@ -73,7 +72,7 @@ class TestString < MiniTest::Unit::TestCase
 
   def test_that_it_handles_incorrect_zips
     assert_equal [], "9888".to_zip
-    assert_nil "9888".to_region
+    assert_raises(ArgumentError) { "9888".to_region }
     assert_equal [], "9888".to_area
     assert_nil "9888".to_gmt_offset
   end

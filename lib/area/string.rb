@@ -2,7 +2,7 @@ class String
 
   def to_area
     @area_codes = []
-    Area::AREA_CODES.each do |row|
+    Area.area_codes.each do |row|
       @area_codes.push(row.first) if row[1].upcase == self
     end
     @area_codes.length == 1 ? @area_codes.first : @area_codes
@@ -10,11 +10,11 @@ class String
 
   def to_region(options = {})
     if self.to_s.length == 3 # an area code
-      Area::AREA_CODES.each do |row|
+      Area.area_codes.each do |row|
         return row.last if row.first == self.to_s
       end
     else # more than 3 digits, assume a zipcode
-      Area::ZIP_CODES.each do |row|
+      Area.zip_codes.each do |row|
         if row.first == self.to_s
           if options[:city]
             return row[1]
@@ -36,11 +36,11 @@ class String
       @area = self.split(',')
       @area.collect! { |a| a.strip }
 
-      Area::ZIP_CODES.each do |row|
+      Area.zip_codes.each do |row|
         @zip_codes.push(row[0]) if row[1] && row[1].downcase == @area[0].downcase and row[2].downcase == @area[1].downcase
       end
     else
-      Area::ZIP_CODES.each do |row|
+      Area.zip_codes.each do |row|
         @zip_codes.push(row[0]) if row[1] and row[1].downcase == self.downcase
       end
     end
@@ -48,7 +48,7 @@ class String
   end
 
   def to_gmt_offset
-    Area::ZIP_CODES.each do |row|
+    Area.zip_codes.each do |row|
       return row[5] if row[2] != nil and
                           (row[2].upcase == self.to_s.upcase or row[0] == self.to_s)
     end

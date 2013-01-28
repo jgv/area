@@ -1,7 +1,7 @@
 class Array
 
   def to_region(options = {})
-    Area::ZIP_CODES.each do |row|
+    Area.zip_codes.each do |row|
       if row[3] == self[0].to_s and row[4] == self[1].to_s
         if options[:city]
           return row[1]
@@ -16,7 +16,7 @@ class Array
   end
 
   def to_zip
-    Area::ZIP_CODES.each do |row|
+    Area.zip_codes.each do |row|
       if row[3] and row[4]
         db_lat_len = row[3].split('.').length
         db_lon_len = row[4].split('.').length
@@ -33,7 +33,7 @@ class Array
   end
 
   def to_gmt_offset
-    Area::ZIP_CODES.each do |row|
+    Area.zip_codes.each do |row|
       if row[3] == self[0].to_s and row[4] == self[1].to_s
         return row[5]
       end

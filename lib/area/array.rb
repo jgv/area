@@ -1,5 +1,18 @@
 class Array
 
+  # Public: Convert an lat/lon pair as an Array to a region.
+  #
+  # options - An optional hash indicating if you would like just the city or just the state.
+  #
+  # Examples
+  #
+  #   ['40.71209', '-73.95427'].to_region
+  #   # => "Brooklyn, NY"
+  #
+  #   ['40.71209', '-73.95427'].to_region(:state => true)
+  #   # => "NY"
+  #
+  # Returns a String representation of the lat/lon pair.
   def to_region(options = {})
     if row = Area.zip_codes.find {|row| row[3] == self[0].to_s and row[4] == self[1].to_s }
       if options[:city]
@@ -12,6 +25,14 @@ class Array
     end
   end
 
+  # Public: Convert a lat/lon pair to a zip code.
+  #
+  # Examples
+  #
+  #   [40.71209, -73.95427].to_zip
+  #   #=> "11211"
+  #
+  # Returns a String of converted places.
   def to_zip
     Area.zip_codes.find do |row|
       if row[3] and row[4]
@@ -28,6 +49,14 @@ class Array
     end
   end
 
+  # Public: Convert a lat/lon pair to its GMT offset.
+  #
+  # Examples
+  #
+  #   [40.71209, -73.95427].to_gmt_offset
+  #   #=> "-5"
+  #
+  # Returns a String representation of the GMT offset.
   def to_gmt_offset
     row = Area.zip_codes.find {|row| row[3] == self[0].to_s and row[4] == self[1].to_s }
     row[5] if row

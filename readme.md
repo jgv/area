@@ -31,14 +31,14 @@ In your gemfile: `gem 'area'`
 
 #### Convert a state to an area code
 ```` ruby
-"AK".to_area #=> "907"
+"AK".to_area #=> ["907"]
 "CT".to_area #=> ["203", "860"]
 ```
 
 #### Convert a place to a zip code
 ```` ruby
 "long island city, ny".to_zip #=> ["11101", "11109", "11120"]
-"hastings on hudson".to_zip #=> "10706"
+"hastings on hudson".to_zip #=> ["10706"]
 ```
 
 #### Convert a zip code to a place

@@ -23,10 +23,6 @@ class TestInteger < MiniTest::Unit::TestCase
     assert_equal "-5", 11211.to_gmt_offset
   end
 
-  def test_that_it_converts_zip_code_string_to_gmt_offset
-    assert_equal "-5", "11211".to_gmt_offset
-  end
-
   def test_that_it_handles_bad_area_codes
     assert_raises(ArgumentError) { 1234.to_region }
     assert_raises(ArgumentError) { 1234.to_latlon }
@@ -53,12 +49,12 @@ class TestString < MiniTest::Unit::TestCase
   end
 
   def test_that_it_converts_to_area_code
-    assert_equal "907", "AK".to_area
+    assert_equal ["907"], "AK".to_area
     assert_equal ["203", "860"], "CT".to_area
   end
 
   def test_that_it_converts_to_zip_code
-    assert_equal "10706", "hastings on hudson".to_zip
+    assert_equal ["10706"], "hastings on hudson".to_zip
     assert_equal ["11101", "11109", "11120"], "long Island city".to_zip
   end
 
@@ -73,9 +69,26 @@ class TestString < MiniTest::Unit::TestCase
   def test_that_it_handles_incorrect_zips
     assert_equal [], "9888".to_zip
     assert_raises(ArgumentError) { "9888".to_region }
-    assert_equal [], "9888".to_area
-    assert_nil "9888".to_gmt_offset
+    assert_raises(ArgumentError) { "9888".to_area }
+    assert_raises(ArgumentError) { "9888".to_gmt_offset }
   end
+
+  def test_that_it_converts_zip_code_to_latlon
+    assert_equal "40.71209, -73.95427", "11211".to_latlon
+  end
+
+  def test_that_it_converts_zip_code_to_lat
+    assert_equal "40.71209", "11211".to_lat
+  end
+
+  def test_that_it_converts_zip_code_to_lon
+    assert_equal "-73.95427", "11211".to_lon
+  end
+
+  def test_that_it_converts_zip_code_to_gmt_offset
+    assert_equal "-5", "11211".to_gmt_offset
+  end
+
 
 end
 

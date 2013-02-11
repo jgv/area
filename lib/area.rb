@@ -31,6 +31,8 @@ module Area
     @zip_codes
   end
 
+  @regions = ["REGION", "NJ", "DC", "CT", "MB", "AL", "WA", "ME", "ID", "CA", "TX", "NY", "PA", "OH", "IL", "MN", "IN", "LA", "ON", "MS", "GA", "MI", "FL", "MD", "BAHAMAS", "BARBADOS", "BC", "NC", "WI", "ANGUILLA", "ANTIGUA AND BARBUDA", "KY", "VA", "BRITISH VIRGIN ISLANDS", "DE", "CO", "WV", "SK", "WY", "NE", "MO", "KS", "IA", "MA", "USVI", "CAYMAN ISLANDS", "RI", "AB", "OK", "MT", "QC", "TN", "UT", "BERMUDA", "RESERVED", "GRENADA", "AR", "AZ", "OR", "NM", "NB", "NH", "SD", "TURKS & CAICOS ISLANDS", "MONTSERRAT", "MP", "GU", "AS", "ND", "NV", "NL", "US GOVERNMENT", "ST. LUCIA", "DOMINICA", "ST. VINCENT & GRENADINES", "PR", "TOLL FREE", "VT", "SC", "HI", "DOMINICAN REPUBLIC", "YT", "TRINIDAD & TOBAGO", "ST. KITTS & NEVIS", "JAMAICA", "TOLL CALLS", "NS", "AK"]
+
   def self.code?(code)
     if code.to_s.length == 3
       return code
@@ -46,5 +48,30 @@ module Area
       raise ArgumentError, "You must provide a valid area or zip code", caller
     end
   end
+
+  def self.zip?(code)
+    if code.to_s.length == 5
+      return code
+    else
+      raise ArgumentError, "You must provide zip code", caller
+    end
+  end
+
+  def self.state_or_territory?(state)
+    if @regions.include?(state.upcase)
+      return state
+    else
+      raise ArgumentError, "You must provide a valid US state abbreviation or territory name", caller
+    end
+  end
+
+  def self.zip_or_territory?(state)
+    if @regions.include?(state.upcase) or Area.zip?(state)
+      return state
+    else
+      raise ArgumentError, "You must provide a valid US state abbreviation or zipcode.", caller
+    end
+  end
+
 
 end

@@ -4,7 +4,7 @@ class String
   #
   # Examples
   #
-  #   "CT".to_area
+  #   "Connecticut".to_area
   #   # => ["203", "860"]
   #
   # Returns an Array of converted area codes.

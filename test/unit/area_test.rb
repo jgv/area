@@ -4,7 +4,7 @@ require 'area'
 class TestInteger < MiniTest::Unit::TestCase
 
   def test_that_it_converts_area_code_to_region
-    assert_equal "NY", 646.to_region
+    assert_equal "New York", 646.to_region
   end
 
   def test_that_it_converts_zip_code_to_latlon
@@ -36,7 +36,7 @@ end
 class TestString < MiniTest::Unit::TestCase
 
   def test_that_it_converts_area_code_to_region
-    assert_equal "NY", "646".to_region
+    assert_equal "New York", "646".to_region
   end
 
   def test_that_it_converts_zip_code_to_region
@@ -45,12 +45,12 @@ class TestString < MiniTest::Unit::TestCase
 
   def test_that_it_supports_options
     assert_equal "Brooklyn", "11211".to_region(:city => true)
-    assert_equal "NY", "11211".to_region(:state => true)
+    assert_equal "New York", "11211".to_region(:state => true)
   end
 
   def test_that_it_converts_to_area_code
-    assert_equal ["907"], "AK".to_area
-    assert_equal ["203", "860"], "CT".to_area
+    assert_equal ["907"], "Alaska".to_area
+    assert_equal ["203", "860"], "Connecticut".to_area
   end
 
   def test_that_it_converts_to_zip_code
@@ -63,7 +63,7 @@ class TestString < MiniTest::Unit::TestCase
   end
 
   def test_that_it_converts_to_offset
-    assert_equal "-5", "ny".to_gmt_offset
+    assert_equal "-5", "New York".to_gmt_offset
   end
 
   def test_that_it_handles_incorrect_zips
@@ -103,7 +103,7 @@ class TestArray < MiniTest::Unit::TestCase
   end
 
   def test_that_it_converts_latlon_to_region_with_options
-    assert_equal "NY", [40.71209, -73.95427].to_region(:state => true)
+    assert_equal "New York", [40.71209, -73.95427].to_region(:state => true)
   end
 
   def test_that_it_converts_latlon_to_gmt_offset

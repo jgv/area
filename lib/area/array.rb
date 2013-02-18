@@ -10,7 +10,7 @@ class Array
   #   # => "Brooklyn, NY"
   #
   #   ['40.71209', '-73.95427'].to_region(:state => true)
-  #   # => "NY"
+  #   # => "New York"
   #
   # Returns a String representation of the lat/lon pair.
   def to_region(options = {})

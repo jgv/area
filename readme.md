@@ -31,8 +31,8 @@ In your gemfile: `gem 'area'`
 
 #### Convert a state to an area code
 ```` ruby
-"AK".to_area #=> ["907"]
-"CT".to_area #=> ["203", "860"]
+"Alaska".to_area #=> ["907"]
+"Connecticut".to_area #=> ["203", "860"]
 ```
 
 #### Convert a place to a zip code
@@ -45,7 +45,7 @@ In your gemfile: `gem 'area'`
 ```` ruby
 "11211".to_region #=> "Brooklyn, NY"
 "11211".to_region(:city => true) #=> "Brooklyn"
-"11211".to_region(:state => true) #=> "NY"
+"11211".to_region(:state => true) #=> "New York"
 ```
 
 #### Convert a zip code to a lat/lon
@@ -70,7 +70,7 @@ In your gemfile: `gem 'area'`
 
 #### Get the GMT offset of a state
 ```` ruby
-"NY".to_gmt_offset #=> "-5" # by state
+"New York".to_gmt_offset #=> "-5" # by state
 ```
 
 #### Convert a lat/lon pair to a zipcode

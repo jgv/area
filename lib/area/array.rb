@@ -14,14 +14,19 @@ class Array
   #
   # Returns a String representation of the lat/lon pair.
   def to_region(options = {})
-    if row = Area.zip_codes.find {|row| row[3] == self[0].to_s and row[4] == self[1].to_s }
-      if options[:city]
-        return row[1]
-      elsif options[:state]
-        return row[2]
-      else
-        return row[1] + ', ' + row[2]
+    if self[0].is_a?(String) and self[1].is_a?(String)
+      if row = Area.zip_codes.find {|row| row[3] == self[0].to_s and row[4] == self[1].to_s }
+        if options[:city]
+          return row[1]
+        elsif options[:state]
+          return row[2]
+        else
+          return row[1] + ', ' + row[2]
+        end
       end
+    else
+      warn "[DEPRECATION] using to_region on an array of integers has been deprecated. Use a string instead."
+      return nil
     end
   end
 

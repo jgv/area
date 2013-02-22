@@ -14,7 +14,7 @@ module Area
   zip_path = File.open(File.join(File.dirname(__FILE__), '..', 'data', 'zipcodes.csv'))
   area_path = File.open(File.join(File.dirname(__FILE__), '..', 'data', 'areacodes.csv'))
 
-    # there is probably a better way to do this...
+  # there is probably a better way to do this...
   if RUBY_VERSION.to_f >= 1.9
     @area_codes = CSV.read(area_path)
     @zip_codes = CSV.read(zip_path)
@@ -31,7 +31,11 @@ module Area
     @zip_codes
   end
 
-  @regions = ["NJ", "DC", "CT", "MB", "AL", "WA", "ME", "ID", "CA", "TX", "NY", "PA", "OH", "IL", "MN", "IN", "LA", "ON", "MS", "GA", "MI", "FL", "MD", "BAHAMAS", "BARBADOS", "BC", "NC", "WI", "ANGUILLA", "ANTIGUA AND BARBUDA", "KY", "VA", "BRITISH VIRGIN ISLANDS", "DE", "CO", "WV", "SK", "WY", "NE", "MO", "KS", "IA", "MA", "USVI", "CAYMAN ISLANDS", "RI", "AB", "OK", "MT", "QC", "TN", "UT", "BERMUDA", "RESERVED", "GRENADA", "AR", "AZ", "OR", "NM", "NB", "NH", "SD", "TURKS & CAICOS ISLANDS", "MONTSERRAT", "MP", "GU", "AS", "ND", "NV", "NL", "US GOVERNMENT", "ST. LUCIA", "DOMINICA", "ST. VINCENT & GRENADINES", "PR", "TOLL FREE", "VT", "SC", "HI", "DOMINICAN REPUBLIC", "YT", "TRINIDAD & TOBAGO", "ST. KITTS & NEVIS", "JAMAICA", "TOLL CALLS", "NS", "AK"]
+  def self.regions
+    regions = []
+    @area_codes.map{|row| regions << row.last.upcase }
+    return regions
+  end
 
   def self.code?(code)
     if code.to_s.length == 3
@@ -58,7 +62,7 @@ module Area
   end
 
   def self.state_or_territory?(state)
-    if @regions.include?(state.upcase)
+    if self.regions.include?(state.upcase)
       return state
     else
       raise ArgumentError, "You must provide a valid US state abbreviation or territory name", caller
@@ -66,7 +70,7 @@ module Area
   end
 
   def self.zip_or_territory?(state)
-    if @regions.include?(state.upcase) or Area.zip?(state)
+    if self.regions.include?(state.upcase) or self.zip?(state)
       return state
     else
       raise ArgumentError, "You must provide a valid US state abbreviation or zipcode.", caller

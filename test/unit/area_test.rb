@@ -211,5 +211,12 @@ class TestArray < MiniTest::Unit::TestCase
     end
   end
 
+end
+
+class TestArea < MiniTest::Unit::TestCase
+
+  def test_that_regions_is_an_array
+    assert_instance_of Array, Area.regions
+  end
 
 end

@@ -60,7 +60,7 @@ In your gemfile: `gem 'area'`
 
 #### Convert a zip code to a lon
 ```` ruby
-"11211".to_lon #=> "40.71209, -73.95427"
+"11211".to_lon #=> "-73.95427"
 ```
 
 #### Get the GMT offset of a zipcode

@@ -123,7 +123,7 @@ class String
   # Examples
   #
   #   "11211".to_lon
-  #   #=> "40.71209"
+  #   #=> "-73.95427"
   #
   # Returns a String representation of the longitude.
   def to_lon

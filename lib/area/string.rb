@@ -30,7 +30,7 @@ class String
     if self.to_s.length == 3  # an area code
       row = Area.area_codes.find {|row| row.first == self.to_s }
       return row.last if row
-    elsif self.to_s.length == 5
+    elsif self.match(/^\d{5}(-\d{4})?$/)
       if row = Area.zip_codes.find {|row| row.first == self.to_s }
         if row.first == self.to_s
           if options[:city]

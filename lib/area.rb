@@ -46,7 +46,7 @@ module Area
   end
 
   def self.code_or_zip?(code)
-    if code.to_s.length == 3 or code.to_s.length == 5
+    if code.to_s.length == 3 or code.match(/^\d{5}(-\d{4})?$/)
       return code
     else
       raise ArgumentError, "You must provide a valid area or zip code", caller
@@ -54,7 +54,7 @@ module Area
   end
 
   def self.zip?(code)
-    if code.to_s.length == 5
+    if code.match(/^\d{5}(-\d{4})?$/)
       return code
     else
       raise ArgumentError, "You must provide zip code", caller

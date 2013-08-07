@@ -84,4 +84,34 @@ class Integer
     end
   end
 
+
+  # Public: Determine if a zipcode observes daylight savings time.
+  #
+  # Examples
+  #
+  #   11211.to_dst
+  #   #=> "1"
+  #
+  # Returns a String representation of of the daylight savings time observance.
+  def to_dst
+    if Area.zip?(self)
+      warn "[DEPRECATION] using `to_dst` with an integer representaion of a zipcode is deprecated and will be removed in future versions. Please use a string instead."
+      row = Area.zip_codes.find {|row| row.first == self.to_s }
+      row[6] if row
+    end
+  end
+
+  # Public: Return boolean for daylight savings time observance.
+  #
+  # Examples
+  #
+  #   11211.observes_dst?
+  #   #=> true
+  #
+  # Returns a Boolean of the daylight savings time observance.
+  def observes_dst?
+    to_dst == "1"
+  end
+
+
 end

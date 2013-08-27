@@ -123,6 +123,10 @@ class TestString < MiniTest::Unit::TestCase
     assert_equal "-5", "11211".to_gmt_offset
   end
 
+  def test_that_it_converts_area_code_to_country
+    assert_equal "CANADA", "250".to_country
+  end
+
   # Benchmarks
 
   def bench_area_code_to_region

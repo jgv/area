@@ -47,6 +47,25 @@ class String
   end
 
 
+  # Public: Convert an area code or zipcode to the country it appears in.
+  #
+  # Examples
+  #
+  #   "646".to_country
+  #   #=> US
+  #
+  #   "236".to_country
+  #   #=> "CANADA",
+  #
+  # Returns a String representation of a country.
+  def to_country
+    if self.to_s.length == 3  # an area code
+      row = Area.area_codes.find {|row| row.first == self.to_s }
+      return row[2] if row
+    end
+  end
+
+
   # Public: Convert a place to a zip code.
   #
   # Examples

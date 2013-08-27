@@ -127,6 +127,10 @@ class TestString < MiniTest::Unit::TestCase
     assert_equal "CANADA", "250".to_country
   end
 
+  def test_that_it_converts_area_code_to_overlay_complex
+    assert_equal ["212", "646", "917"], "646".to_overlay_complex
+  end
+
   # Benchmarks
 
   def bench_area_code_to_region

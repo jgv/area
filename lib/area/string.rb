@@ -54,9 +54,6 @@ class String
   #   "646".to_country
   #   #=> US
   #
-  #   "236".to_country
-  #   #=> "CANADA",
-  #
   # Returns a String representation of a country.
   def to_country
     if self.to_s.length == 3  # an area code
@@ -65,6 +62,21 @@ class String
     end
   end
 
+
+  # Public: Get other area codes from an overlay complex.
+  #
+  # Examples
+  #
+  #   "646".to_overlay_complex
+  #   #=> ["212", "646", "917"]
+  #
+  # Returns a String representation of a country.
+  def to_overlay_complex
+    if self.to_s.length == 3  # an area code
+      row = Area.area_codes.find {|row| row.first == self.to_s }
+      return row[3].split('/') if row
+    end
+  end
 
   # Public: Convert a place to a zip code.
   #

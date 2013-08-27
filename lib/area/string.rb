@@ -86,6 +86,34 @@ class String
   end
 
 
+  # Public: Determine if a zipcode observes daylight savings time.
+  #
+  # Examples
+  #
+  #   "11211".to_dst
+  #   #=> "1"
+  #
+  # Returns a String representation of the daylight savings time observance.
+  def to_dst
+    if Area.zip_or_territory?(self.to_s)
+      row = Area.zip_codes.find {|row| row[2] != nil and (row[2].upcase == self.to_s.upcase or row[0] == self.to_s) }
+      row[6] if row
+    end
+  end
+
+  # Public: Return boolean for daylight savings time observance.
+  #
+  # Examples
+  #
+  #   "11211".observes_dst?
+  #   #=> true
+  #
+  # Returns a Boolean of the daylight savings time observance.
+  def observes_dst?
+    to_dst == "1"
+  end
+
+
   # Public: Convert a zipcode to its latitude and longitude.
   #
   # Examples

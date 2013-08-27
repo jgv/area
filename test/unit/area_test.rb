@@ -25,12 +25,22 @@ class TestInteger < MiniTest::Unit::TestCase
     assert_equal "-5", 11211.to_gmt_offset
   end
 
+  def test_that_it_converts_zip_code_int_daylight_savings_time_observance
+    assert_equal "1", 11211.to_dst
+  end
+
+  def test_that_it_returns_boolean_for_daylight_savings_time_observance
+    assert_equal true, 11211.observes_dst?
+  end
+
   def test_that_it_handles_bad_area_codes
     assert_raises(ArgumentError) { 1234.to_region }
     assert_raises(ArgumentError) { 1234.to_latlon }
     assert_raises(ArgumentError) { 1234.to_lat }
     assert_raises(ArgumentError) { 1234.to_lon }
     assert_raises(ArgumentError) { 1234.to_gmt_offset }
+    assert_raises(ArgumentError) { 1234.to_dst }
+    assert_raises(ArgumentError) { 1234.observes_dst? }
   end
 
   # Benchmarks
@@ -76,11 +86,25 @@ class TestString < MiniTest::Unit::TestCase
     assert_equal "-5", "ny".to_gmt_offset
   end
 
+  def test_that_it_converts_daylight_savings_time_observance
+    assert_equal "1", "11211".to_dst
+  end
+
+  def test_that_it_returns_true_for_daylight_savings_time_observance
+    assert_equal true, "11211".observes_dst?
+  end
+
+  def test_that_it_returns_false_for_daylight_savings_time_nonobservance
+    assert_equal false, "AZ".observes_dst?
+  end
+
   def test_that_it_handles_incorrect_zips
     assert_equal [], "9888".to_zip
     assert_raises(ArgumentError) { "9888".to_region }
     assert_raises(ArgumentError) { "9888".to_area }
     assert_raises(ArgumentError) { "9888".to_gmt_offset }
+    assert_raises(ArgumentError) { "9888".to_dst }
+    assert_raises(ArgumentError) { "9888".observes_dst? }
   end
 
   def test_that_it_converts_zip_code_to_latlon
@@ -149,6 +173,18 @@ class TestString < MiniTest::Unit::TestCase
     end
   end
 
+  def bench_to_dst
+    assert_performance_constant 0.9999 do |n|
+      n.times { "ny".to_dst }
+    end
+  end
+
+  def bench_observes_dst?
+    assert_performance_constant 0.9999 do |n|
+      n.times { "ny".observes_dst? }
+    end
+  end
+
 end
 
 class TestArray < MiniTest::Unit::TestCase
@@ -167,6 +203,14 @@ class TestArray < MiniTest::Unit::TestCase
 
   def test_that_it_converts_latlon_to_gmt_offset
     assert_equal "-5", ["40.71209", "-73.95427"].to_gmt_offset
+  end
+
+  def test_that_it_converts_latlon_to_daylight_savings_time_observance
+    assert_equal "1", ["40.71209", "-73.95427"].to_dst
+  end
+
+  def test_that_it_returns_boolean_for_daylight_savings_time_observance
+    assert_equal true, ["40.71209", "-73.95427"].observes_dst?
   end
 
   def test_that_it_handles_latlon_precision

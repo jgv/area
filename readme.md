@@ -14,7 +14,7 @@ Hi. This gem allows you to perform the following conversions:
 * A state to its GMT offset
 * A lat/lon pair to a region
 * A lat/lon pair to its GMT offset
-* A lat/lon pair to its zip code 
+* A lat/lon pair to its zip code
 
 Area uses public domain data and does not rely on any external services (the internets). Usage is meant to be more lightweight than the Geocoder gem.
 
@@ -73,6 +73,16 @@ In your gemfile: `gem 'area'`
 "NY".to_gmt_offset #=> "-5" # by state
 ```
 
+#### Determine daylight savings time observance of a zipcode
+```` ruby
+"11211".observes_dst? #=> true
+```
+
+#### Determine daylight savings time observance of a state
+```` ruby
+"NY".observes_dst? #=> true # by state
+```
+
 #### Convert a lat/lon pair to a zipcode
 ```` ruby
 [40.71209, -73.95427].to_zip #=> "11211"
@@ -86,6 +96,11 @@ In your gemfile: `gem 'area'`
 #### Get the GMT offset for a lat/lon pair
 ```` ruby
 [40.71209, -73.95427].to_gmt_offset #=> "-5"
+```
+
+#### Determine daylight savings time observance for a lat/lon pair
+```` ruby
+[40.71209, -73.95427].observes_dst? #=> true
 ```
 
 ## Testing and Contributing and Stuff

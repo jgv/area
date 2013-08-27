@@ -67,4 +67,30 @@ class Array
     row[5] if row
   end
 
+
+  # Public: Determine if a lat/lon pair observes daylight savings time.
+  #
+  # Examples
+  #
+  #   [40.71209, -73.95427].to_dst
+  #   #=> "1"
+  #
+  # Returns a String representation of daylight savings time observance.
+  def to_dst
+    row = Area.zip_codes.find {|row| row[3] == self[0].to_s and row[4] == self[1].to_s }
+    row[6] if row
+  end
+
+  # Public: Return boolean for daylight savings time observance.
+  #
+  # Examples
+  #
+  #   [40.71209, -73.95427].observes_dst?
+  #   #=> true
+  #
+  # Returns a Boolean of the daylight savings time observance.
+  def observes_dst?
+    to_dst == "1"
+  end
+
 end

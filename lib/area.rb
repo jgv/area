@@ -33,7 +33,7 @@ module Area
 
   def self.regions
     regions = []
-    @area_codes.map{|row| regions << row.last.upcase }
+    @area_codes.map{|row| regions << row[1].upcase if !!row[1] }
     return regions
   end
 
@@ -62,7 +62,7 @@ module Area
   end
 
   def self.state_or_territory?(state)
-    if self.regions.include?(state.upcase)
+    if state.is_a?(String) && self.regions.include?(state.upcase)
       return state
     else
       raise ArgumentError, "You must provide a valid US state abbreviation or territory name", caller

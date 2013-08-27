@@ -10,10 +10,9 @@ class String
   # Returns an Array of converted area codes.
   def to_area
     if Area.state_or_territory?(self)
-      @area_codes = Area.area_codes.find_all {|row| row[1].upcase == self }.map {|a| a.first }
+      Area.area_codes.find_all {|row| row[1].upcase == self if !!row[1] }.map {|a| a.first }
     end
   end
-
 
   # Public: Convert an area code or zipcode to a US state or region.
   #
@@ -29,7 +28,7 @@ class String
   def to_region(options = {})
     if self.to_s.length == 3  # an area code
       row = Area.area_codes.find {|row| row.first == self.to_s }
-      return row.last if row
+      return row[1] if row
     elsif self.match(/^\d{5}(-\d{4})?$/)
       if row = Area.zip_codes.find {|row| row.first == self.to_s }
         if row.first == self.to_s
@@ -79,7 +78,7 @@ class String
   #
   # Returns a String representation of the GMT offset.
   def to_gmt_offset
-    if Area.zip_or_territory?(self.to_s)
+    if Area.zip_or_territory?(self)
       row = Area.zip_codes.find {|row| row[2] != nil and (row[2].upcase == self.to_s.upcase or row[0] == self.to_s) }
       row[5] if row
     end

@@ -70,7 +70,7 @@ class TestString < MiniTest::Unit::TestCase
 
   def test_that_it_converts_to_area_code
     assert_equal ["907"], "AK".to_area
-    assert_equal ["203", "860"], "CT".to_area
+    assert_equal ["203", "475", "860", "959"], "CT".to_area
   end
 
   def test_that_it_converts_to_zip_code

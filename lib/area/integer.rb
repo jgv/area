@@ -12,7 +12,7 @@ class Integer
   def to_region(options = {})
     if Area.code?(self) # presume an area code
       row = Area.area_codes.find{|row| row.first == self.to_s }
-      row.last if row
+      row[1] if row
     end
   end
 

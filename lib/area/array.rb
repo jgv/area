@@ -34,23 +34,28 @@ class Array
   #
   # Examples
   #
-  #   [40.71209, -73.95427].to_zip
+  #   ['40.71209', '-73.95427'].to_zip
   #   #=> "11211"
   #
   # Returns a String of converted places.
   def to_zip
-    Area.zip_codes.find do |row|
-      if row[3] and row[4]
-        db_lat_len = row[3].split('.').length
-        db_lon_len = row[4].split('.').length
-        lat = "%.#{db_lat_len}f" % self[0]
-        lon = "%.#{db_lon_len}f" % self[1]
-        db_lat = "%.#{db_lat_len}f" % row[3].to_f
-        db_lon = "%.#{db_lon_len}f" % row[4].to_f
-        if db_lat.to_s == lat.to_s and db_lon.to_s == lon.to_s
-          return row[0]
+    if self[0].is_a?(String) and self[1].is_a?(String)
+      Area.zip_codes.find do |row|
+        if row[3] and row[4]
+          db_lat_len = row[3].split('.').length
+          db_lon_len = row[4].split('.').length
+          lat = "%.#{db_lat_len}f" % self[0]
+          lon = "%.#{db_lon_len}f" % self[1]
+          db_lat = "%.#{db_lat_len}f" % row[3].to_f
+          db_lon = "%.#{db_lon_len}f" % row[4].to_f
+          if db_lat.to_s == lat.to_s and db_lon.to_s == lon.to_s
+            return row[0]
+          end
         end
       end
+    else
+      warn "[DEPRECATION] using to_region on an array of integers has been deprecated. Use a string instead."
+      return nil
     end
   end
 
@@ -58,13 +63,18 @@ class Array
   #
   # Examples
   #
-  #   [40.71209, -73.95427].to_gmt_offset
+  #   ["40.71209", "-73.95427"].to_gmt_offset
   #   #=> "-5"
   #
   # Returns a String representation of the GMT offset.
   def to_gmt_offset
-    row = Area.zip_codes.find {|row| row[3] == self[0].to_s and row[4] == self[1].to_s }
-    row[5] if row
+    if self[0].is_a?(String) and self[1].is_a?(String)
+      row = Area.zip_codes.find {|row| row[3] == self[0].to_s and row[4] == self[1].to_s }
+      row[5] if row
+    else
+      warn "[DEPRECATION] using to_region on an array of integers has been deprecated. Use a string instead."
+      return nil
+    end
   end
 
 
@@ -72,20 +82,26 @@ class Array
   #
   # Examples
   #
-  #   [40.71209, -73.95427].to_dst
+  #   ["40.71209", "-73.95427"].to_dst
   #   #=> "1"
   #
   # Returns a String representation of daylight savings time observance.
   def to_dst
-    row = Area.zip_codes.find {|row| row[3] == self[0].to_s and row[4] == self[1].to_s }
-    row[6] if row
+    if self[0].is_a?(String) and self[1].is_a?(String)
+      row = Area.zip_codes.find {|row| row[3] == self[0].to_s and row[4] == self[1].to_s }
+      row[6] if row
+    else
+      warn "[DEPRECATION] using to_region on an array of integers has been deprecated. Use a string instead."
+      return nil
+    end
+
   end
 
   # Public: Return boolean for daylight savings time observance.
   #
   # Examples
   #
-  #   [40.71209, -73.95427].observes_dst?
+  #   ["40.71209", "-73.95427"].observes_dst?
   #   #=> true
   #
   # Returns a Boolean of the daylight savings time observance.

@@ -75,6 +75,8 @@ class String
     if self.to_s.length == 3  # an area code
       row = Area.area_codes.find {|row| row.first == self.to_s }
       return row[3].split('/') if row
+    else
+
     end
   end
 
@@ -107,9 +109,44 @@ class String
   #   "11211".to_gmt_offset
   #   #=> "-5"
   #
+  #   "646".to_gmt_offset
+  #   #=> "-5"
+  #
   # Returns a String representation of the GMT offset.
   def to_gmt_offset
-    if Area.zip_or_territory?(self)
+    if self.to_s.length == 3  # an area code
+      row = Area.area_codes.find {|row| row.first == self.to_s }
+      tz = row[4] if row
+      case tz
+        when "E"
+        @offset = "-5"
+        when "C"
+        @offset = "-6"
+        when "M"
+        @offset = "-4"
+        when "A"
+        @offset = "-4"
+        when "P"
+        @offset = "-8"
+        when "CE"
+        @offset = ["-6, -5"]
+        when "EC"
+        @offset = ["-5, -6"]
+        when "CM"
+        @offset = ["-6, -4"]
+        when "MP"
+        @offset = ["-4, -8"]
+        when "NA"
+        @offset = "-3:30"
+        when "CMP"
+        @offset = "-7"
+        when /utc(\-|\+)\d+/i
+        @offset = tz[/(\-|\+)\d+/i]
+        else
+        @offset = nil
+      end
+      return @offset
+    elsif Area.zip_or_territory?(self)
       row = Area.zip_codes.find {|row| row[2] != nil and (row[2].upcase == self.to_s.upcase or row[0] == self.to_s) }
       row[5] if row
     end
@@ -142,7 +179,6 @@ class String
   def observes_dst?
     to_dst == "1"
   end
-
 
   # Public: Convert a zipcode to its latitude and longitude.
   #

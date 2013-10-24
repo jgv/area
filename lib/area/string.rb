@@ -33,11 +33,11 @@ class String
       if row = Area.zip_codes.find {|row| row.first == self.to_s }
         if row.first == self.to_s
           if options[:city]
-            return row[1]
-          elsif options[:state]
             return row[2]
+          elsif options[:state]
+            return row[1]
           else
-            return row[1] + ', ' + row[2]
+            return row[2] + ', ' + row[1]
           end
         end
       end
@@ -95,14 +95,16 @@ class String
     if self.match(',')
       area = self.split(',')
       area.collect! { |a| a.strip }
-      @zip_codes = Area.zip_codes.find_all {|row| row[1] && row[1].downcase == area[0].downcase and row[2].downcase == area[1].downcase }.map {|a| a.first }
+      @zip_codes = Area.zip_codes.find_all {|row| row[1] && row[1].downcase == area[1].downcase and row[2].downcase == area[0].downcase }.map {|a| a.first }
     else
-      @zip_codes = Area.zip_codes.find_all {|row| row[1] != nil and row[1].downcase == self.downcase }.map {|a| a.first }
+      @zip_codes = Area.zip_codes.find_all {|row| row[2] != nil and row[2].downcase == self.downcase }.map {|a| a.first }
     end
   end
 
 
   # Public: Convert a zipcode to its GMT offset.
+  #
+  # DEPRECATED!
   #
   # Examples
   #
@@ -191,7 +193,7 @@ class String
   def to_latlon
     if Area.zip?(self)
       row = Area.zip_codes.find {|row| row.first == self.to_s }
-      row[3] + ', ' + row[4] if row
+      row[4] + ', ' + row[5] if row
     end
   end
 
@@ -207,7 +209,7 @@ class String
   def to_lat
     if Area.zip?(self)
       row = Area.zip_codes.find {|row| row.first == self.to_s }
-      row[3] if row
+      row[4] if row
     end
   end
 
@@ -223,7 +225,7 @@ class String
   def to_lon
     if Area.zip?(self)
       row = Area.zip_codes.find {|row| row.first == self.to_s }
-      row[4] if row
+      row[5] if row
     end
   end
 

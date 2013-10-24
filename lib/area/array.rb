@@ -15,15 +15,11 @@ class Array
   # Returns a String representation of the lat/lon pair.
   def to_region(options = {})
     if self[0].is_a?(String) and self[1].is_a?(String)
-      if row = Area.zip_codes.find {|row| row[3] == self[0].to_s and row[4] == self[1].to_s }
-        if options[:city]
-          return row[1]
-        elsif options[:state]
-          return row[2]
-        else
-          return row[1] + ', ' + row[2]
-        end
-      end
+      row = Area.zip_codes.find {|row| row[4] == self[0].to_s and row[5] == self[1].to_s }
+      return nil if !row
+      return row[2] if options[:city]
+      return row[1] if options[:state]
+      return row[2] + ', ' + row[1]
     else
       warn "[DEPRECATION] using to_region on an array of integers has been deprecated. Use a string instead."
       return nil
@@ -34,25 +30,23 @@ class Array
   #
   # Examples
   #
-  #   ['40.71209', '-73.95427'].to_zip
-  #   #=> "11211"
+  #   ['40.71', '-73.95'].to_zip
+  #   #=> ["10038", "10273", "10278", "10292"]
   #
-  # Returns a String of converted places.
+  # Returns an Array of converted places.
   def to_zip
     if self[0].is_a?(String) and self[1].is_a?(String)
-      Area.zip_codes.find do |row|
-        if row[3] and row[4]
-          db_lat_len = row[3].split('.').length
-          db_lon_len = row[4].split('.').length
+      @zip_codes = Area.zip_codes.find_all { |row|
+        if row[4] and row[5]
+          db_lat_len = row[4].split('.').length
+          db_lon_len = row[5].split('.').length
           lat = "%.#{db_lat_len}f" % self[0]
           lon = "%.#{db_lon_len}f" % self[1]
-          db_lat = "%.#{db_lat_len}f" % row[3].to_f
-          db_lon = "%.#{db_lon_len}f" % row[4].to_f
-          if db_lat.to_s == lat.to_s and db_lon.to_s == lon.to_s
-            return row[0]
-          end
+          db_lat = "%.#{db_lat_len}f" % row[4].to_f
+          db_lon = "%.#{db_lon_len}f" % row[5].to_f
+          db_lat.to_s == lat.to_s and db_lon.to_s == lon.to_s
         end
-      end
+      }.map { |a| a.first }
     else
       warn "[DEPRECATION] using to_region on an array of integers has been deprecated. Use a string instead."
       return nil
@@ -60,6 +54,8 @@ class Array
   end
 
   # Public: Convert a lat/lon pair to its GMT offset.
+  #
+  # DEPRECATED!
   #
   # Examples
   #
@@ -79,6 +75,8 @@ class Array
 
 
   # Public: Determine if a lat/lon pair observes daylight savings time.
+  #
+  # DEPRECATED!
   #
   # Examples
   #

@@ -1,5 +1,4 @@
-class String
-
+rmclass String
   # Public: Convert a string to an area code.
   #
   # Examples

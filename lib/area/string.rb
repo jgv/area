@@ -1,4 +1,4 @@
-rmclass String
+class String
   # Public: Convert a string to an area code.
   #
   # Examples
@@ -119,31 +119,31 @@ rmclass String
       row = Area.area_codes.find {|row| row.first == self.to_s }
       tz = row[4] if row
       case tz
-        when "E"
+      when "E"
         @offset = "-5"
-        when "C"
+      when "C"
         @offset = "-6"
-        when "M"
+      when "M"
         @offset = "-4"
-        when "A"
+      when "A"
         @offset = "-4"
-        when "P"
+      when "P"
         @offset = "-8"
-        when "CE"
+      when "CE"
         @offset = ["-6, -5"]
-        when "EC"
+      when "EC"
         @offset = ["-5, -6"]
-        when "CM"
+      when "CM"
         @offset = ["-6, -4"]
-        when "MP"
+      when "MP"
         @offset = ["-4, -8"]
-        when "NA"
+      when "NA"
         @offset = "-3:30"
-        when "CMP"
+      when "CMP"
         @offset = "-7"
-        when /utc(\-|\+)\d+/i
+      when /utc(\-|\+)\d+/i
         @offset = tz[/(\-|\+)\d+/i]
-        else
+      else
         @offset = nil
       end
       return @offset

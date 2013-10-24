@@ -103,6 +103,14 @@ In your gemfile: `gem 'area'`
 [40.71209, -73.95427].observes_dst? #=> true
 ```
 
+## Data Sources
+
+As of version 1.0.0 the data sources for Area has changed for the sake of accuracy.
+
+The postal code data is from [GreatData](http://greatdata.com) which uses Census ZCTA records as a starting point and supplimented with USPS Zip Codes. The data is updated regularly. The latitude and longitude of each zip is determined with an approximate 6 mile margin of accuracy.
+
+The area code data is from [Neustar](http://www.nanpa.com) and adheres to the [North American Numbering Plan](http://en.wikipedia.org/wiki/North_American_Numbering_Plan) which serves [20 North American countries](http://en.wikipedia.org/wiki/North_American_Numbering_Plan#NANP_countries_and_territories).
+
 ## Testing and Contributing and Stuff
 
 Contributions are more than welcome. I'm [testing](http://travis-ci.org/jgv/area) with minitest. This gem supports:
@@ -110,6 +118,7 @@ Contributions are more than welcome. I'm [testing](http://travis-ci.org/jgv/area
 * Ruby 1.8.7
 * Ruby 1.9.2
 * Ruby 1.9.3
+* Ruby 2.0.0
 * JRuby 1.8
 * JRuby 1.9
 * Rubinius 1.8
@@ -117,4 +126,4 @@ Contributions are more than welcome. I'm [testing](http://travis-ci.org/jgv/area
 
 ## Copyright
 
-Copyright (c) 2012 Jonathan Vingiano. See [LICENSE](https://github.com/jgv/area/blob/master/MIT-LICENSE) for details.
+Copyright (c) 2013 Jonathan Vingiano. See [LICENSE](https://github.com/jgv/area/blob/master/MIT-LICENSE) for details.

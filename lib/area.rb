@@ -11,9 +11,6 @@ require 'area/string'
 
 module Area
 
-  # dont eat it on the tildes
-  Encoding.default_external = Encoding::UTF_8
-  Encoding.default_internal = Encoding::UTF_8
 
   zip_path = File.open(File.join(File.dirname(__FILE__), '..', 'data', 'zipcodes.csv'))
   area_path = File.open(File.join(File.dirname(__FILE__), '..', 'data', 'areacodes.csv'))

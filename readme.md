@@ -18,6 +18,10 @@ Hi. This gem allows you to perform the following conversions:
 
 Area uses public domain data and does not rely on any external services (the internets). Usage is meant to be more lightweight than the Geocoder gem.
 
+## Our fork
+
+This fork of Area uses data from [Geonames](http://www.geonames.org) to populate zipcode data. We've dropped timezone data.
+
 ## Installation
 
 In your gemfile: `gem 'area'`

@@ -23,7 +23,13 @@ class String
   #   #=> NY
   #
   #   "11211".to_region
-  #   #=> "Brooklyn, NY",
+  #   #=> "Brooklyn, NY"
+  #
+  #   "11211".to_region(:city => true)
+  #   #=> "Brooklyn"
+  #
+  #   "11211".to_region(:city => true, :state => true)
+  #   #=> ["Brooklyn", "NY"]
   #
   # Returns a String of converted area codes or zipcodes.
   def to_region(options = {})
@@ -33,20 +39,20 @@ class String
     elsif self.to_s.length == 5
       if row = Area.zip_codes.find {|row| row.first == self.to_s }
         if row.first == self.to_s
-          if options[:city]
-            return row[1]
-          elsif options[:state]
-            return row[2]
+          result = []
+          if !options.keys.empty?
+            result << row[1] if options[:city]
+            result << row[2] if options[:state]
           else
-            return row[1] + ', ' + row[2]
+            result << row[1] + ', ' + row[2]
           end
+          return (result.size > 1) ? result : result.first
         end
       end
     else
       raise ArgumentError, "You must provide a valid area or zip code", caller
     end
   end
-
 
   # Public: Convert a place to a zip code.
   #

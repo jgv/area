@@ -68,6 +68,10 @@ class TestString < MiniTest::Unit::TestCase
     assert_equal "NY", "11211".to_region(:state => true)
   end
 
+  def test_that_it_supports_multiple_options_for_zipcodes
+    assert_equal ["Brooklyn", "NY"], "11211".to_region(:city => true, :state => true)
+  end
+
   def test_that_it_converts_to_area_code
     assert_equal ["907"], "AK".to_area
     assert_equal ["203", "860"], "CT".to_area

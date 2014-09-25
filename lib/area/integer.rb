@@ -29,7 +29,7 @@ class Integer
     if Area.zip?(self)
       warn "[DEPRECATION] using `to_latlon` with an integer representation of a zipcode is deprecated and will be removed in future versions. Please use a string instead."
       row = Area.zip_codes.find {|row| row.first == self.to_s }
-      row[3] + ', ' + row[4] if row
+      "#{row[Area::ZIP::LONGITUTE]}, #{row[Area::ZIP::LATITUTE]}" if row
     end
   end
 
@@ -46,7 +46,7 @@ class Integer
     if Area.zip?(self)
       warn "[DEPRECATION] using `to_lat` with an integer representation of a zipcode is deprecated and will be removed in future versions. Please use a string instead."
       row = Area.zip_codes.find {|row| row.first == self.to_s }
-      row[3] if row
+      row[Area::ZIP::LONGITUTE] if row
     end
   end
 
@@ -63,7 +63,7 @@ class Integer
     if Area.zip?(self)
       warn "[DEPRECATION] using `to_lon` with an integer representaion of a zipcode is deprecated and will be removed in future versions. Please use a string instead."
       row = Area.zip_codes.find {|row| row.first == self.to_s }
-      row[4] if row
+      row[Area::ZIP::LATITUTE] if row
     end
   end
 
@@ -80,7 +80,7 @@ class Integer
     if Area.zip?(self)
       warn "[DEPRECATION] using `to_gmt` with an integer representaion of a zipcode is deprecated and will be removed in future versions. Please use a string instead."
       row = Area.zip_codes.find {|row| row.first == self.to_s }
-      row[5] if row
+      row[Area::ZIP::GMT_OFFSET] if row
     end
   end
 
@@ -97,7 +97,7 @@ class Integer
     if Area.zip?(self)
       warn "[DEPRECATION] using `to_dst` with an integer representaion of a zipcode is deprecated and will be removed in future versions. Please use a string instead."
       row = Area.zip_codes.find {|row| row.first == self.to_s }
-      row[6] if row
+      row[Area::ZIP::DAYLIGHT_SAVING] if row
     end
   end
 

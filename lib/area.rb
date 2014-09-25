@@ -14,6 +14,21 @@ module Area
   zip_path = File.open(File.join(File.dirname(__FILE__), '..', 'data', 'zipcodes.csv'))
   area_path = File.open(File.join(File.dirname(__FILE__), '..', 'data', 'areacodes.csv'))
 
+  module ZIP
+    ZIPCODE = 0
+    CITY = 1
+    STATE = 2
+    LONGITUTE = 3
+    LATITUTE = 4
+    GMT_OFFSET = 5
+    DAYLIGHT_SAVING = 6
+  end
+
+  module AREA
+    AREA_CODE = 0
+    STATE = 1
+  end
+
   # there is probably a better way to do this...
   if RUBY_VERSION.to_f >= 1.9
     @area_codes = CSV.read(area_path)
@@ -32,22 +47,20 @@ module Area
   end
 
   def self.regions
-    regions = []
-    @area_codes.map{|row| regions << row.last.upcase }
-    return regions
+    @area_codes.inject([]) {|regions, row| regions << row.last.upcase }
   end
 
   def self.code?(code)
     if code.to_s.length == 3
-      return code
+      code
     else
       raise ArgumentError, "You must provide a valid area code", caller
     end
   end
 
   def self.code_or_zip?(code)
-    if code.to_s.length == 3 or code.to_s.length == 5
-      return code
+    if code.to_s.length == 3 || code.to_s.length == 5
+      code
     else
       raise ArgumentError, "You must provide a valid area or zip code", caller
     end
@@ -55,7 +68,7 @@ module Area
 
   def self.zip?(code)
     if code.to_s.length == 5
-      return code
+      code
     else
       raise ArgumentError, "You must provide zip code", caller
     end
@@ -63,15 +76,15 @@ module Area
 
   def self.state_or_territory?(state)
     if self.regions.include?(state.upcase)
-      return state
+      state
     else
       raise ArgumentError, "You must provide a valid US state abbreviation or territory name", caller
     end
   end
 
   def self.zip_or_territory?(state)
-    if self.regions.include?(state.upcase) or self.zip?(state)
-      return state
+    if self.regions.include?(state.upcase) || self.zip?(state)
+      state
     else
       raise ArgumentError, "You must provide a valid US state abbreviation or zipcode.", caller
     end

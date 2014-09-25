@@ -14,14 +14,14 @@ class Array
   #
   # Returns a String representation of the lat/lon pair.
   def to_region(options = {})
-    if self[0].is_a?(String) and self[1].is_a?(String)
-      if row = Area.zip_codes.find {|row| row[3] == self[0].to_s and row[4] == self[1].to_s }
+    if self[0].is_a?(String) && self[1].is_a?(String)
+      if row = Area.zip_codes.find {|row| row[Area::ZIP::LONGITUTE] == self[0].to_s && row[Area::ZIP::LATITUTE] == self[1].to_s }
         if options[:city]
-          return row[1]
+          return row[Area::ZIP::CITY]
         elsif options[:state]
-          return row[2]
+          return row[Area::ZIP::STATE]
         else
-          return row[1] + ', ' + row[2]
+          return "#{row[Area::ZIP::CITY]}, #{row[Area::ZIP::STATE]}"
         end
       end
     else
@@ -40,15 +40,15 @@ class Array
   # Returns a String of converted places.
   def to_zip
     Area.zip_codes.find do |row|
-      if row[3] and row[4]
-        db_lat_len = row[3].split('.').length
-        db_lon_len = row[4].split('.').length
+      if row[Area::ZIP::LONGITUTE] && row[Area::ZIP::LATITUTE]
+        db_lat_len = row[Area::ZIP::LONGITUTE].split('.').length
+        db_lon_len = row[Area::ZIP::LATITUTE].split('.').length
         lat = "%.#{db_lat_len}f" % self[0]
         lon = "%.#{db_lon_len}f" % self[1]
-        db_lat = "%.#{db_lat_len}f" % row[3].to_f
-        db_lon = "%.#{db_lon_len}f" % row[4].to_f
-        if db_lat.to_s == lat.to_s and db_lon.to_s == lon.to_s
-          return row[0]
+        db_lat = "%.#{db_lat_len}f" % row[Area::ZIP::LONGITUTE].to_f
+        db_lon = "%.#{db_lon_len}f" % row[Area::ZIP::LATITUTE].to_f
+        if db_lat.to_s == lat.to_s && db_lon.to_s == lon.to_s
+          return row[Area::ZIP::ZIPCODE]
         end
       end
     end
@@ -63,8 +63,8 @@ class Array
   #
   # Returns a String representation of the GMT offset.
   def to_gmt_offset
-    row = Area.zip_codes.find {|row| row[3] == self[0].to_s and row[4] == self[1].to_s }
-    row[5] if row
+    row = Area.zip_codes.find {|row| row[Area::ZIP::LONGITUTE] == self[0].to_s && row[Area::ZIP::LATITUTE] == self[1].to_s }
+    row[Area::ZIP::GMT_OFFSET] if row
   end
 
 
@@ -77,8 +77,8 @@ class Array
   #
   # Returns a String representation of daylight savings time observance.
   def to_dst
-    row = Area.zip_codes.find {|row| row[3] == self[0].to_s and row[4] == self[1].to_s }
-    row[6] if row
+    row = Area.zip_codes.find {|row| row[Area::ZIP::LONGITUTE] == self[0].to_s && row[Area::ZIP::LATITUTE] == self[1].to_s }
+    row[Area::ZIP::DAYLIGHT_SAVING] if row
   end
 
   # Public: Return boolean for daylight savings time observance.

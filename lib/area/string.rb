@@ -10,7 +10,7 @@ class String
   # Returns an Array of converted area codes.
   def to_area
     if Area.state_or_territory?(self)
-      @area_codes = Area.area_codes.find_all {|row| row[1].upcase == self }.map {|a| a.first }
+      @area_codes = Area.area_codes.find_all {|row| row[Area::AREA::STATE].upcase == self }.map {|a| a.first }
     end
   end
 
@@ -34,11 +34,13 @@ class String
       if row = Area.zip_codes.find {|row| row.first == self.to_s }
         if row.first == self.to_s
           if options[:city]
-            return row[1]
+            return row[Area::ZIP::CITY]
           elsif options[:state]
-            return row[2]
+            return row[Area::ZIP::STATE]
+          elsif options[:full_state]
+            return Area.full_state(row[Area::ZIP::STATE])
           else
-            return row[1] + ', ' + row[2]
+            return "#{row[Area::ZIP::CITY]}, #{row[Area::ZIP::STATE]}"
           end
         end
       end
@@ -63,9 +65,9 @@ class String
     if self.match(',')
       area = self.split(',')
       area.collect! { |a| a.strip }
-      @zip_codes = Area.zip_codes.find_all {|row| row[1] && row[1].downcase == area[0].downcase and row[2].downcase == area[1].downcase }.map {|a| a.first }
+      @zip_codes = Area.zip_codes.find_all {|row| row[Area::ZIP::CITY] && row[Area::ZIP::CITY].downcase == area[0].downcase && row[Area::ZIP::STATE].downcase == area[1].downcase }.map {|a| a.first }
     else
-      @zip_codes = Area.zip_codes.find_all {|row| row[1] != nil and row[1].downcase == self.downcase }.map {|a| a.first }
+      @zip_codes = Area.zip_codes.find_all {|row| row[Area::ZIP::CITY] != nil && row[Area::ZIP::CITY].downcase == self.downcase }.map {|a| a.first }
     end
   end
 
@@ -80,8 +82,8 @@ class String
   # Returns a String representation of the GMT offset.
   def to_gmt_offset
     if Area.zip_or_territory?(self.to_s)
-      row = Area.zip_codes.find {|row| row[2] != nil and (row[2].upcase == self.to_s.upcase or row[0] == self.to_s) }
-      row[5] if row
+      row = Area.zip_codes.find {|row| row[Area::ZIP::STATE] != nil && (row[Area::ZIP::STATE].upcase == self.to_s.upcase || row[Area::ZIP::ZIPCODE] == self.to_s) }
+      row[Area::ZIP::GMT_OFFSET] if row
     end
   end
 
@@ -96,8 +98,8 @@ class String
   # Returns a String representation of the daylight savings time observance.
   def to_dst
     if Area.zip_or_territory?(self.to_s)
-      row = Area.zip_codes.find {|row| row[2] != nil and (row[2].upcase == self.to_s.upcase or row[0] == self.to_s) }
-      row[6] if row
+      row = Area.zip_codes.find {|row| row[Area::ZIP::STATE] != nil && (row[Area::ZIP::STATE].upcase == self.to_s.upcase || row[Area::ZIP::ZIPCODE] == self.to_s) }
+      row[Area::ZIP::DAYLIGHT_SAVING] if row
     end
   end
 
@@ -125,7 +127,7 @@ class String
   def to_latlon
     if Area.zip?(self)
       row = Area.zip_codes.find {|row| row.first == self.to_s }
-      row[3] + ', ' + row[4] if row
+      "#{row[Area::ZIP::LONGITUTE]}, #{row[Area::ZIP::LATITUTE]}" if row
     end
   end
 
@@ -141,7 +143,7 @@ class String
   def to_lat
     if Area.zip?(self)
       row = Area.zip_codes.find {|row| row.first == self.to_s }
-      row[3] if row
+      row[Area::ZIP::LONGITUTE] if row
     end
   end
 
@@ -157,7 +159,7 @@ class String
   def to_lon
     if Area.zip?(self)
       row = Area.zip_codes.find {|row| row.first == self.to_s }
-      row[4] if row
+      row[Area::ZIP::LATITUTE] if row
     end
   end
 

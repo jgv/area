@@ -37,6 +37,8 @@ class String
             return row[Area::ZIP::CITY]
           elsif options[:state]
             return row[Area::ZIP::STATE]
+          elsif options[:full_state]
+            return Area.full_state(row[Area::ZIP::STATE])
           else
             return "#{row[Area::ZIP::CITY]}, #{row[Area::ZIP::STATE]}"
           end

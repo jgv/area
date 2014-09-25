@@ -46,6 +46,7 @@ In your gemfile: `gem 'area'`
 "11211".to_region #=> "Brooklyn, NY"
 "11211".to_region(:city => true) #=> "Brooklyn"
 "11211".to_region(:state => true) #=> "NY"
+"11211".to_region(:full_state => true) #=> "New York"
 ```
 
 #### Convert a zip code to a lat/lon

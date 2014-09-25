@@ -13,6 +13,7 @@ module Area
 
   zip_path = File.open(File.join(File.dirname(__FILE__), '..', 'data', 'zipcodes.csv'))
   area_path = File.open(File.join(File.dirname(__FILE__), '..', 'data', 'areacodes.csv'))
+  state_path = File.open(File.join(File.dirname(__FILE__), '..', 'data', 'states.csv'))
 
   module ZIP
     ZIPCODE = 0
@@ -29,13 +30,20 @@ module Area
     STATE = 1
   end
 
+  module STATE
+    NAME = 0
+    FULL_NAME = 1
+  end
+
   # there is probably a better way to do this...
   if RUBY_VERSION.to_f >= 1.9
     @area_codes = CSV.read(area_path)
     @zip_codes = CSV.read(zip_path)
+    @states = CSV.read(state_path)
   else
     @area_codes = FasterCSV.parse(area_path)
     @zip_codes = FasterCSV.parse(zip_path)
+    @states = FasterCSV.read(state_path)
   end
 
   def self.area_codes
@@ -44,6 +52,10 @@ module Area
 
   def self.zip_codes
     @zip_codes
+  end
+
+  def self.states
+    @states
   end
 
   def self.regions
@@ -90,5 +102,11 @@ module Area
     end
   end
 
-
+  def self.full_state(state)
+    if row = Area.states.find { |row| row[STATE::NAME] == state }
+      row[STATE::FULL_NAME]
+    else
+      ''
+    end
+  end
 end

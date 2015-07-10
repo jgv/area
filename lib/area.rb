@@ -36,7 +36,7 @@ module Area
 
   def self.regions
     regions = []
-    @area_codes.map{|row| regions << row.last.upcase }
+    area_codes.map{|row| regions << row.last.upcase }
     return regions
   end
 

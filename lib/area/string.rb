@@ -27,12 +27,14 @@ class String
   #
   # Returns a String of converted area codes or zipcodes.
   def to_region(options = {})
-    if self.to_s.length == 3  # an area code
-      row = Area.area_codes.find {|row| row.first == self.to_s }
+    code = self.to_s
+    code = code[0..4] if code.match(/^\d{5}-?\d{4}$/)
+    if code.length == 3  # an area code
+      row = Area.area_codes.find {|row| row.first == code }
       return row.last if row
-    elsif self.to_s.length == 5
-      if row = Area.zip_codes.find {|row| row.first == self.to_s }
-        if row.first == self.to_s
+    elsif code.length == 5
+      if row = Area.zip_codes.find {|row| row.first == code }
+        if row.first == code
           if options[:city]
             return row[1]
           elsif options[:state]

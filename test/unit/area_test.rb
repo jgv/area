@@ -63,6 +63,13 @@ class TestString < MiniTest::Unit::TestCase
     assert_equal "Brooklyn, NY", "11211".to_region
   end
 
+  def test_that_it_supports_nine_digits_for_zipcodes
+    assert_equal "Brooklyn, NY", "11211-1111".to_region
+    assert_equal "Brooklyn, NY", "112111111".to_region
+    assert_equal "Brooklyn", "11211-1111".to_region(:city => true)
+    assert_equal "NY", "11211-1111".to_region(:state => true)
+  end
+
   def test_that_it_supports_options_for_zipcodes
     assert_equal "Brooklyn", "11211".to_region(:city => true)
     assert_equal "NY", "11211".to_region(:state => true)
@@ -101,6 +108,9 @@ class TestString < MiniTest::Unit::TestCase
   def test_that_it_handles_incorrect_zips
     assert_equal [], "9888".to_zip
     assert_raises(ArgumentError) { "9888".to_region }
+    assert_raises(ArgumentError) { "988888".to_region }
+    assert_raises(ArgumentError) { "98888-44444".to_region }
+    assert_raises(ArgumentError) { "9888844444".to_region }
     assert_raises(ArgumentError) { "9888".to_area }
     assert_raises(ArgumentError) { "9888".to_gmt_offset }
     assert_raises(ArgumentError) { "9888".to_dst }
